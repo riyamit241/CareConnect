@@ -1,0 +1,65 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
+df = pd.read_csv(r"C:\Users\Riya\Desktop\EY Hackathon\daily\diabetes_glucose_dataset.csv")
+
+label_encoder = LabelEncoder()
+df['category'] = label_encoder.fit_transform(df['category'])
+
+# Create the scatter plot
+plt.figure(figsize=(8, 6))
+plt.scatter(df['FPG'], df['PPG'], alpha=0.7) 
+
+# Add labels and title
+plt.xlabel("Fasting Plasma Glucose (FPG)")
+plt.ylabel("Postprandial Plasma Glucose (PPG)")
+plt.title("FPG vs PPG Scatter Plot")
+
+# Show the plot
+plt.grid(True)
+plt.show()
+
+
+"""df.info()
+df.describe()
+sns.scatterplot(df, hue='category')
+plt.show()
+"""
+
+"""def generate_scatter_plot(data, x_col, y_col, fraction=0.5, title=""):
+  
+  Generates a scatter plot from a pandas DataFrame.
+
+  Args:
+    data: pandas DataFrame containing the data.
+    x_col: Name of the column for the x-axis.
+    y_col: Name of the column for the y-axis.
+    fraction: Fraction of the data to use for the plot (default: 0.5).
+    title: Title for the plot.
+
+  Returns:
+    None
+  
+
+  # Sample a fraction of the data
+  sampled_data = data.sample(frac=fraction)
+
+  # Extract x and y values
+  x = sampled_data[x_col]
+  y = sampled_data[y_col]
+
+  # Create the scatter plot
+  plt.figure(figsize=(8, 6))
+  plt.scatter(x, y, alpha=0.7)  # alpha controls point transparency
+  plt.xlabel(x_col)
+  plt.ylabel(y_col)
+  plt.title(title)
+  plt.grid(True)
+  plt.show()
+
+# Example usage:
+# Assuming you have a pandas DataFrame named 'df' with columns 'FPG' and 'PPG'
+generate_scatter_plot(df, 'FPG', 'PPG', fraction=0.3, title="FPG vs PPG Scatter Plot")"""

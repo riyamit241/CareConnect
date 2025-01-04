@@ -1,0 +1,24 @@
+import numpy as np
+import pickle
+from sklearn.preprocessing import LabelEncoder
+
+# Load the saved model
+with open('diabetes_daily.pkl', 'rb') as file:
+    loaded_rf_model = pickle.load(file)
+
+# Example input (replace with actual data to predict)
+# FPG, PPG 
+
+sample_data = np.array([[232.3,700.783]])  # Update as needed
+
+# Predict diabetes risk
+sample_pred = loaded_rf_model.predict(sample_data)
+
+if sample_pred == 0:
+    print("at risk")
+elif sample_pred == 1:
+    print("critical")
+elif sample_pred == 2:
+    print("moderate")
+else:
+    print("stable")

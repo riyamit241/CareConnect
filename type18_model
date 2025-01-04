@@ -1,0 +1,18 @@
+import numpy as np
+import pickle
+from sklearn.preprocessing import LabelEncoder
+
+# Load the saved model
+with open('type18_model.pkl', 'rb') as file:
+    loaded_gnb_model = pickle.load(file)
+
+# Example input (replace with actual data to predict)
+# gender,age,hypertension,heart_disease,smoking_history,bmi,HbA1c_level,blood_glucose_level,diabetes
+
+sample_data = np.array([[76,2,25.5,166,93,4.21,6.04,2.39,4.860753,4.860753,28.9,5.13,57.8,6.9,3,3,0]])  # Update as needed
+
+# Predict diabetes risk
+sample_pred = loaded_gnb_model.predict(sample_data)
+
+# Print the result
+print("Diabetes" if sample_pred[0] == 1 else "No Diabetes")

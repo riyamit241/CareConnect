@@ -1,0 +1,51 @@
+# Importing necessary libraries
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
+import pickle
+
+df = pd.read_csv(r"C:\Users\Riya\Desktop\EY Hackathon\diabetes_type18.csv")
+
+df_sample = df.sample(frac=0.32, random_state=42)
+
+"""df_sample.info()
+df_sample.describe()
+sns.pairplot(df, hue='Diabetes')
+plt.show()"""
+
+#Split data into features (X) and target (y)
+X = df_sample.drop(columns=['Diabetes'], axis=1)
+y = df_sample['Diabetes']
+
+# Split data into training and testing sets[-]=
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=30)
+
+# Initialize and train the Gaussian Naive Bayes model
+gnb = GaussianNB()
+gnb.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = gnb.predict(X_test)
+
+# Evaluate the model
+"""print("classification_report: \n")
+print(classification_report(y_test, y_pred))
+"""
+print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
+
+#Save the trained model
+with open('type18_model.pkl', 'wb') as file:
+    pickle.dump(gnb, file)
+
+# Load the model (optional)
+with open('type18_model.pkl', 'rb') as file:
+    loaded_gnb_model = pickle.load(file)
+
+# Predict for a sample input
+sample_data = np.array([[31,2,17.54,107,60,4.5,4.14,0.37,4.860753,4.860753,10,3.9,52.2,4.17,4.860753,4.860753,0]])  # Replace with actual sample values
+sample_pred = loaded_gnb_model.predict(sample_data)
+print("Diabetes" if sample_pred[0] == 1 else "No Diabetes")
